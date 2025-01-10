@@ -9,7 +9,7 @@ app.get('/', (req, res) => {
   res.send(`
     <div style="font-family: Arial, sans-serif; text-align: center; padding: 50px;">
       <h1 style="color: dodgerblue; font-size: 50px;">
-        Hello World!
+        Hello-World!
       </h1>
       <p style="color: gold; font-size: 20px;">
         Current Date and Time: ${dateTime}
