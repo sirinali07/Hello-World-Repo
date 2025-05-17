@@ -51,6 +51,7 @@ Deploy a Docker container (node-hello-app) via GitHub Actions using SSH to a rem
   }
 }
 ```
+
 ### 🧷 Step 6: Add `index.js` App Code
 ```
 const port = process.env.PORT || 8080;
@@ -79,8 +80,22 @@ app.get('/liveness', (req, res) => res.send('Live !!'));
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 ```
+### 🧷 Step 7: Add `Dockerfile`
+```dockerfile
+FROM node:18
 
-###  🤖  Step 7: Add  `deploy.yml` file in `.github/workflows`
+WORKDIR /usr/src/app
+
+COPY package*.json ./
+RUN npm install
+
+COPY . .
+
+EXPOSE 8080
+CMD ["npm", "start"]
+```
+
+###  🤖  Step 8: Add  `deploy.yml` file in `.github/workflows`
 
 ```yaml
 name: Build and Deploy to EC2
@@ -148,7 +163,7 @@ jobs:
 🔁 This deploys code every time you push to main.
 Commit and push the workflow.
 
-### 🧪 STEP 8: Test Deployment
+### 🧪 STEP 9: Test Deployment
 
 * Go to GitHub → Actions and watch the job.
 * After success, open:
