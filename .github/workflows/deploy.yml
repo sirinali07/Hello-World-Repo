@@ -37,14 +37,14 @@ jobs:
         username: ${{ secrets.EC2_USER }}
         key: ${{ secrets.EC2_KEY }}
         script: |
-          script: |
-          sudo apt update
-          sudo apt install -y docker.io
+          sudo apt update -y
+          sudo apt install curl -y
+          sudo curl -SSL https://get.docker.com/ | sh
           sudo systemctl start docker
-          docker --version
+          sudo docker --version
           
-          docker load < node-hello-app.tar
-          docker rm -f node-hello-app || true
-          docker run -d --name node-hello-app -p 8080:8080 node-hello-app
+          sudo docker load < node-hello-app.tar
+          sudo docker rm -f node-hello-app || true
+          sudo docker run -d --name node-hello-app -p 8080:8080 node-hello-app
 
 
