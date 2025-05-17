@@ -37,14 +37,27 @@ jobs:
         username: ${{ secrets.EC2_USER }}
         key: ${{ secrets.EC2_KEY }}
         script: |
+          echo "🔄 Updating system"
           sudo apt update -y
-          sudo apt install curl -y
-          sudo curl -SSL https://get.docker.com/ | sh
-          sudo systemctl start docker
+          sudo apt install -y curl
+
+          echo "🐳 Installing Docker"
+          curl -fsSL https://get.docker.com | sudo sh
+
+          echo "🟢 Enabling and starting Docker service"
+          sudo systemctl enable docker
+          sudo systemctl restart docker
+
+          echo "🔍 Checking Docker version"
           sudo docker --version
-          
+
+          echo "📦 Loading Docker image"
           sudo docker load < node-hello-app.tar
+          
+          echo "🛑 Removing existing container (if any)"
           sudo docker rm -f node-hello-app || true
+
+          echo "🚀 Running new container"
           sudo docker run -d --name node-hello-app -p 8080:8080 node-hello-app
 
 
